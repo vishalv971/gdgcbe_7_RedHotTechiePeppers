@@ -1,23 +1,27 @@
-from socket import *
+import socket
+from threading import *
 
-HOST = "172.16.23.173" #local host
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = "172.16.23.173"
+port = 7000
+print(host)
+print(port)
+serversocket.bind((host, port))
 
-PORT = 7000 #open port 7000 for connection
+class client(Thread):
+    def __init__(self, socket, address):
+        Thread.__init__(self)
+        self.sock = socket
+        self.addr = address
+        self.start()
 
-s = socket(AF_INET, SOCK_STREAM)
+    def run(self):
+        while 1:
+            #print('Client sent:', self.sock.recv(1024).decode())
+            self.sock.send(b'Sending Something to App')
 
-s.bind((HOST, PORT))
-
-s.listen(1) #how many connections can it receive at one time
-
-conn, addr = s.accept() #accept the connection
-
-print "Connected by: " , addr #print the address of the person connected
-
-while True:
-    data = conn.recv(1024) #how many bytes of data will the server receive
-    print "Received: ", repr(data)
-    reply = raw_input("Reply: ") #server's reply to the client
-    conn.sendall(reply)
-
-conn.close()
+serversocket.listen(5)
+print ('Server Started and Listening')
+while 1:
+    clientsocket, address = serversocket.accept()
+    client(clientsocket, address)
