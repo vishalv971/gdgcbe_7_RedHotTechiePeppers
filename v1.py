@@ -6,4 +6,21 @@ import mysql.connector
 im = Image.open("sample.jpg")
 
 text = pytesseract.image_to_string(im, lang='eng')
-print(text)
+
+cnx = mysql.connector.connect(user='vishal', password='vishal',
+                              host='127.0.0.1',
+                              database='GDG')
+cursor = cnx.cursor()
+
+query = ("SELECT NumberPlate FROM Central")
+
+cursor.execute(query)
+flag=1
+for name in cursor:
+	if(text == name[0]):
+		print("Car Found")
+		flag=0
+if(flag==1):
+	print("Car not Found")
+cursor.close()
+cnx.close()
