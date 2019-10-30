@@ -25,12 +25,12 @@ Our system solves the aforementioned problems by automating the entire toll coll
 
 Tech Stack :
 
-Python (Image recognition and Raspberry Pi interfacing)
+-Python (Image recognition and Raspberry Pi interfacing)
 
-OpenCV
+-OpenCV
 
-TensorFlow
+-TensorFlow
 
-Java for Android
+-Java for Android
 
-Optical Character Recognition
+-Optical Character Recognition
